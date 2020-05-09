@@ -1,15 +1,13 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Books from '../components/Books.vue';
 import Ping from '../components/Ping.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: '/ping',
-    name: 'ping',
-    component: Ping,
-  },
+  { path: '/', name: 'books', component: Books },
+  { path: '/ping', name: 'ping', component: Ping },
   // {
   //   path: '/about',
   //   name: 'About',
