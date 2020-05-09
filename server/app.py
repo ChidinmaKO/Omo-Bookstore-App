@@ -1,7 +1,7 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 
-from omobookstore.config import Config
+from server.config import Config
 
 
 def create_app(config_class=Config):
