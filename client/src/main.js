@@ -1,10 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import BootstrapVue from 'bootstrap-vue';
+import axios from 'axios';
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 
 Vue.use(BootstrapVue);
+
+axios.defaults.baseURL = 'http://127.0.0.1:4000';
 
 Vue.config.productionTip = false;
 
