@@ -1,11 +1,15 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-10">
+  <b-container>
+    <b-row>
+      <b-col col sm="10">
         <h1>Books</h1>
         <hr><br><br>
+
+        <app-alert v-if="showAlert" :message="message"></app-alert>
+
         <button type="button" class="btn btn-success btn-sm" v-b-modal.book-modal>Add Book</button>
         <br><br>
+
         <table class="table table-hover">
           <thead>
             <tr>
@@ -32,8 +36,9 @@
             </tr>
           </tbody>
         </table>
-      </div>
-    </div>
+
+      </b-col>
+    </b-row>
 
     <b-modal ref="addBookModal"
       id="book-modal"
@@ -94,11 +99,12 @@
         <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-modal>
-  </div>
+  </b-container>
 </template>
 
 <script>
 import globalAxios from 'axios';
+import Alert from './Alert.vue';
 
 export default {
   data() {
@@ -109,7 +115,13 @@ export default {
         read: [],
       },
       books: [],
+      showAlert: false,
+      message: '',
     };
+  },
+
+  components: {
+    'app-alert': Alert,
   },
 
   methods: {
@@ -119,6 +131,8 @@ export default {
       }).catch((error) => {
         // eslint-disable-next-line
         console.error(error)
+        this.showAlert = true;
+        this.message = 'An error occurred whilst getting this book. Please try again.';
       });
     },
 
@@ -155,11 +169,28 @@ export default {
         // eslint-disable-next-line
         console.log('response: ', response);
         this.getBooks();
+        this.showAlert = true;
+        this.message = 'Book added!';
       }).catch((error) => {
         // eslint-disable-next-line
         console.error(error);
         this.getBooks();
+        this.showAlert = true;
+        this.message = 'An error occurred whilst adding this book. Please try again.';
       });
+    },
+
+    updateBook() {
+      this.showAlert = true;
+    },
+
+    removeBook() {
+      this.showAlert = true;
+    },
+
+    deleteBook() {
+      // eslint-disable-next-line
+      console.log('book deleted');
     },
   },
 
