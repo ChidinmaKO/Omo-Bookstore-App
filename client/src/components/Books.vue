@@ -37,7 +37,13 @@
                   >
                     Update
                   </button>
-                  <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    @click="deleteBook(book)"
+                  >
+                    Delete
+                  </button>
                 </div>
               </td>
             </tr>
@@ -188,6 +194,7 @@ export default {
       showAlert: false,
       message: '',
       editForm: {
+        id: '',
         title: '',
         author: '',
         read: [],
@@ -304,13 +311,24 @@ export default {
       this.getBooks();
     },
 
-    removeBook() {
-      this.showAlert = true;
+    removeBook(bookId) {
+      // Todo: get book title
+      // Todo: probably add a confirmation modal before book is deleted instead of deleting on button click?
+      globalAxios.delete(`/books/${bookId}`).then(() => {
+        this.getBooks();
+        this.showAlert = true;
+        this.message = 'Book deleted!';
+      }).catch((error) => {
+        // eslint-disable-next-line
+        console.error(error);
+        this.getBooks();
+        this.showAlert = true;
+        this.message = 'An error occurred whilst deleting this book. Please try again.';
+      });
     },
 
-    deleteBook() {
-      // eslint-disable-next-line
-      console.log('book deleted');
+    deleteBook(book) {
+      this.removeBook(book.id);
     },
   },
 

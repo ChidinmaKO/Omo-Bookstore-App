@@ -52,7 +52,7 @@ def create_app(config_class=Config):
             response_object['books'] = BOOKS
         return jsonify(response_object)
 
-    @app.route('/books/<book_id>', methods=['PUT'])
+    @app.route('/books/<book_id>', methods=['PUT', 'DELETE'])
     def single_book(book_id):
         response_object = {'status': 'success'}
         if request.method == 'PUT':
@@ -66,6 +66,9 @@ def create_app(config_class=Config):
                 'read': post_data.get('read')
             })
             response_object['message'] = 'Book updated!'
+        elif request.method == 'DELETE':
+            remove_book(book_id)
+            response_object['message'] = 'Book deleted!'
         else:
             response_object['books'] = BOOKS
         return jsonify(response_object)
